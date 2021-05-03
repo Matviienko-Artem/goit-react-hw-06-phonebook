@@ -3,99 +3,82 @@ import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
 import Filter from './components/Filter/Filter';
 import style from './components/ContactForm/ContactForm.module.css';
-import { v4 as uuidv4 } from 'uuid';
 
-class App extends Component {
-  state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
-  };
+// class App extends Component {
 
-  componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    const parseContacts = JSON.parse(contacts);
+//   componentDidMount() {
+//     const contacts = localStorage.getItem('contacts');
+//     const parseContacts = JSON.parse(contacts);
 
-    if (parseContacts) {
-      this.setState({ contacts: parseContacts });
-    }
-  }
+//     if (parseContacts) {
+//       this.setState({ contacts: parseContacts });
+//     }
+//   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-  }
+//   componentDidUpdate(prevProps, prevState) {
+//     if (this.state.contacts !== prevState.contacts) {
+//       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+//     }
+//   }
 
-  addNewContact = data => {
-    const { contacts } = this.state;
+//   onFilter = value => {
+//     this.setState({ filter: value.currentTarget.value });
+//   };
 
-    const newContact = {
-      id: uuidv4(),
-      name: data.name,
-      number: data.number,
-    };
+//   filterOfContactsByName = () => {
+//     const { contacts, filter } = this.state;
 
-    const uniaqueName = contacts.find(
-      contact => contact.name.toLowerCase() === newContact.name.toLowerCase(),
-    );
+//     return contacts.filter(contact =>
+//       contact.name.toLowerCase().includes(filter.toLocaleLowerCase()),
+//     );
+//   };
 
-    if (newContact.name === '') {
-      alert('Вы забыли ввести имя контакта');
-    } else if (newContact.number === '') {
-      alert('Вы забыли ввести номер контакта');
-    } else if (uniaqueName) {
-      alert(`${newContact.name} уже есть в списке`);
-    } else {
-      this.setState(prevState => ({
-        contacts: [newContact, ...prevState.contacts],
-      }));
-    }
-  };
+//   deleteContact = contactId => {
+//     this.setState(prevState => ({
+//       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+//     }));
+//     // this.setState({ filter: '' }); --- надо подумать, будет ли очищатся форма после удаления или нет
+//   };
 
-  onFilter = value => {
-    this.setState({ filter: value.currentTarget.value });
-  };
+//   render() {
+//     const { filter } = this.state;
 
-  filterOfContactsByName = () => {
-    const { contacts, filter } = this.state;
+//     return (
+//       <div className={style.container}>
+//         <h1>Phonebook</h1>
 
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLocaleLowerCase()),
-    );
-  };
+//         <ContactForm />
 
-  deleteContact = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-    }));
-    // this.setState({ filter: '' }); --- надо подумать, будет ли очищатся форма после удаления или нет
-  };
+//         <h2>Contacts</h2>
 
-  render() {
-    const { filter } = this.state;
+//         <Filter value={filter} onFilter={this.onFilter} />
 
-    return (
-      <div className={style.container}>
-        <h1>Phonebook</h1>
+//         <ContactList
+//           contacts={this.filterOfContactsByName()}
+//           ondeleteContact={this.deleteContact}
+//         />
+//       </div>
+//     );
+//   }
+// }
 
-        <ContactForm onSubmit={this.addNewContact} />
+function App() {
+  return (
+    <div className={style.container}>
+      <h1>Phonebook</h1>
 
-        <h2>Contacts</h2>
+      <ContactForm />
 
-        <Filter value={filter} onFilter={this.onFilter} />
+      <h2>Contacts</h2>
 
-        <ContactList
+      {/* <Filter value={filter} onFilter={this.onFilter} /> */}
+
+      {/* <ContactList
           contacts={this.filterOfContactsByName()}
           ondeleteContact={this.deleteContact}
-        />
-      </div>
-    );
-  }
+        /> */}
+    </div>
+  );
 }
 
 export default App;
