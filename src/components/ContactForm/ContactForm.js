@@ -62,14 +62,8 @@ class ContactForm extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { value: state.contacts };
-};
+const mapDispatchToProps = dispatch => ({
+  addNewContact: contact => dispatch(actions.addNewContact(contact)),
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addNewContact: contact => dispatch(actions.addNewContact(contact)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+export default connect(null, mapDispatchToProps)(ContactForm);

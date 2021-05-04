@@ -4,81 +4,37 @@ import ContactList from './components/ContactList/ContactList';
 import Filter from './components/Filter/Filter';
 import style from './components/ContactForm/ContactForm.module.css';
 
-// class App extends Component {
+class App extends Component {
+  // componentDidMount() {
+  //   const contacts = localStorage.getItem('contacts');
+  //   const parseContacts = JSON.parse(contacts);
 
-//   componentDidMount() {
-//     const contacts = localStorage.getItem('contacts');
-//     const parseContacts = JSON.parse(contacts);
+  //   if (parseContacts) {
+  //     this.setState({ contacts: parseContacts });
+  //   }
+  // }
 
-//     if (parseContacts) {
-//       this.setState({ contacts: parseContacts });
-//     }
-//   }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.state.contacts !== prevState.contacts) {
+  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  //   }
+  // }
 
-//   componentDidUpdate(prevProps, prevState) {
-//     if (this.state.contacts !== prevState.contacts) {
-//       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-//     }
-//   }
+  render() {
+    return (
+      <div className={style.container}>
+        <h1>Phonebook</h1>
 
-//   onFilter = value => {
-//     this.setState({ filter: value.currentTarget.value });
-//   };
+        <ContactForm />
 
-//   filterOfContactsByName = () => {
-//     const { contacts, filter } = this.state;
+        <h2>Contacts</h2>
 
-//     return contacts.filter(contact =>
-//       contact.name.toLowerCase().includes(filter.toLocaleLowerCase()),
-//     );
-//   };
+        <Filter />
 
-//   deleteContact = contactId => {
-//     this.setState(prevState => ({
-//       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-//     }));
-//     // this.setState({ filter: '' }); --- надо подумать, будет ли очищатся форма после удаления или нет
-//   };
-
-//   render() {
-//     const { filter } = this.state;
-
-//     return (
-//       <div className={style.container}>
-//         <h1>Phonebook</h1>
-
-//         <ContactForm />
-
-//         <h2>Contacts</h2>
-
-//         <Filter value={filter} onFilter={this.onFilter} />
-
-//         <ContactList
-//           contacts={this.filterOfContactsByName()}
-//           ondeleteContact={this.deleteContact}
-//         />
-//       </div>
-//     );
-//   }
-// }
-
-function App() {
-  return (
-    <div className={style.container}>
-      <h1>Phonebook</h1>
-
-      <ContactForm />
-
-      <h2>Contacts</h2>
-
-      {/* <Filter value={filter} onFilter={this.onFilter} /> */}
-
-      {/* <ContactList
-          contacts={this.filterOfContactsByName()}
-          ondeleteContact={this.deleteContact}
-        /> */}
-    </div>
-  );
+        <ContactList />
+      </div>
+    );
+  }
 }
 
 export default App;

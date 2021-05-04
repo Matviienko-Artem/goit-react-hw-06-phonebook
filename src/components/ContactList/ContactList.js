@@ -1,5 +1,7 @@
 import React from 'react';
 import style from './ContactList.module.css';
+import { connect } from 'react-redux';
+import * as actions from '../../redux/contact-form/contacts-action';
 
 const ContactList = ({ contacts, ondeleteContact }) => {
   return (
@@ -23,4 +25,18 @@ const ContactList = ({ contacts, ondeleteContact }) => {
   );
 };
 
-export default ContactList;
+const mapStateToProps = state => {
+  const { items, filter } = state.contacts;
+
+  return {
+    contacts: items.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLocaleLowerCase()),
+    ),
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  ondeleteContact: contactId => dispatch(actions.DeleteContact(contactId)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

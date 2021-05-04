@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { combineReducers } from 'redux';
 import actionTypes from './contacts-types';
 
@@ -9,27 +8,34 @@ const itemsState = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
-const itemsReducer = (state = itemsState, action) => {
-  switch (action.type) {
-    case actionTypes.ADDNEWCONTACT:
-      const newContact = {
-        id: uuidv4(),
-        name: action.payload.name,
-        number: action.payload.number,
-      };
-
+const itemsReducer = (state = itemsState, { type, payload }) => {
+  switch (type) {
+    case actionTypes.ADD_NEW_CONTACT:
       const uniaqueName = state.find(
-        contact => contact.name.toLowerCase() === newContact.name.toLowerCase(),
+        contact => contact.name.toLowerCase() === payload.name.toLowerCase(),
       );
-      if (newContact.name === '') {
+      if (payload.name === '') {
         alert('Вы забыли ввести имя контакта');
-      } else if (newContact.number === '') {
+      } else if (payload.number === '') {
         alert('Вы забыли ввести номер контакта');
       } else if (uniaqueName) {
-        alert(`${newContact.name} уже есть в списке`);
+        alert(`${payload.name} уже есть в списке`);
       } else {
-        return [newContact, ...state];
+        return [payload, ...state];
       }
+
+    case actionTypes.DELETE_CONTACT:
+      return state.filter(contact => contact.id !== payload);
+
+    default:
+      return state;
+  }
+};
+
+const filterReducer = (state = '', { type, payload }) => {
+  switch (type) {
+    case actionTypes.CHANGE_FILTER:
+      return payload;
 
     default:
       return state;
@@ -38,5 +44,5 @@ const itemsReducer = (state = itemsState, action) => {
 
 export default combineReducers({
   items: itemsReducer,
-  filter: '',
+  filter: filterReducer,
 });

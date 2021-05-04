@@ -1,7 +1,9 @@
 import React from 'react';
 import style from './Filter.module.css';
+import { connect } from 'react-redux';
+import * as actions from '../../redux/contact-form/contacts-action';
 
-const Filter = ({ value, onFilter }) => {
+const Filter = ({ value, onChange }) => {
   return (
     <div>
       <label>
@@ -12,11 +14,19 @@ const Filter = ({ value, onFilter }) => {
           name="filter"
           placeholder="Rosie Simpson"
           value={value}
-          onChange={onFilter}
+          onChange={onChange}
         />
       </label>
     </div>
   );
 };
 
-export default Filter;
+const mapStateToProps = state => ({
+  value: state.contacts.filter,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onChange: e => dispatch(actions.changeFilter(e.target.value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);
