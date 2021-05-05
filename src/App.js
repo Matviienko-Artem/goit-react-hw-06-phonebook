@@ -1,40 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
 import Filter from './components/Filter/Filter';
 import style from './components/ContactForm/ContactForm.module.css';
 
-class App extends Component {
-  // componentDidMount() {
-  //   const contacts = localStorage.getItem('contacts');
-  //   const parseContacts = JSON.parse(contacts);
+const App = () => {
+  return (
+    <div className={style.container}>
+      <h1>Phonebook</h1>
 
-  //   if (parseContacts) {
-  //     this.setState({ contacts: parseContacts });
-  //   }
-  // }
+      <ContactForm />
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.state.contacts !== prevState.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   }
-  // }
+      <h2>Contacts</h2>
 
-  render() {
-    return (
-      <div className={style.container}>
-        <h1>Phonebook</h1>
+      <Filter />
 
-        <ContactForm />
-
-        <h2>Contacts</h2>
-
-        <Filter />
-
-        <ContactList />
-      </div>
-    );
-  }
-}
+      <ContactList />
+    </div>
+  );
+};
 
 export default App;
